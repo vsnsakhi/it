@@ -1,0 +1,324 @@
+:root {
+    --primary-green: #228B22;
+    --light-green: #32CD32;
+    --eco-bg: #e8f5e8;
+    --text-dark: #2F4F4F;
+    --accent-gold: #FFD700;
+    --shadow-neum: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    --transition: all 0.3s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, var(--eco-bg), #f0f8f0);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header with Gradient and Neumorphism */
+header {
+    background: linear-gradient(45deg, var(--primary-green), var(--light-green));
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-neum);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation with Flex and Hover Effects */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+nav button {
+    background: var(--light-green);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+nav button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+nav button:hover::after {
+    width: 200px;
+    height: 200px;
+}
+
+nav button:hover {
+    background: var(--primary-green);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-neum);
+}
+
+/* Section Layout with CSS Grid */
+.section {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--eco-bg);
+    border-radius: 15px;
+    box-shadow: var(--shadow-neum);
+    display: grid;
+    gap: 1.5rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Form Styling with Grid */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 600px;
+}
+
+label {
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+input {
+    padding: 0.75rem;
+    border: 2px solid var(--light-green);
+    border-radius: 10px;
+    background: #fff;
+    transition: var(--transition);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 8px rgba(34, 139, 34, 0.3);
+}
+
+button {
+    background: var(--light-green);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    grid-column: span 2;
+}
+
+button:hover {
+    background: var(--primary-green);
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Table Styling with Zebra Stripes */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: var(--primary-green);
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tr:hover {
+    background: var(--eco-bg);
+}
+
+/* Analysis and Points Sections with Neumorphism */
+#analysisResults, #ecoPoints {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-neum);
+    margin-top: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+#analysisResults:hover, #ecoPoints:hover {
+    transform: translateY(-5px);
+}
+
+/* Quiz and Challenges with Animations */
+#quizOptions button {
+    margin: 0.5rem 0;
+    width: 100%;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px solid var(--light-green);
+    transition: var(--transition);
+}
+
+#quizOptions button:hover {
+    background: var(--light-green);
+    color: white;
+}
+
+#challengeList li {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 6px solid var(--light-green);
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+}
+
+#challengeList li:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-neum);
+}
+
+/* Chart Styling */
+canvas {
+    max-width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: var(--shadow-neum);
+}
+
+/* Eco-Wall and Competitions */
+#ecoWall ul, #competitors ul {
+    list-style: none;
+    padding: 0;
+}
+
+#ecoWall li, #competitors li {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    border-left: 6px solid var(--light-green);
+    transition: var(--transition);
+}
+
+#ecoWall li:hover, #competitors li:hover {
+    transform: translateY(-3px);
+}
+
+/* Badge Animation */
+@keyframes badgeGlow {
+    0% { box-shadow: 0 0 5px var(--accent-gold); }
+    50% { box-shadow: 0 0 20px var(--accent-gold), 0 0 30px rgba(255, 215, 0, 0.5); }
+    100% { box-shadow: 0 0 5px var(--accent-gold); }
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: var(--accent-gold);
+    color: var(--text-dark);
+    font-weight: bold;
+    border-radius: 5px;
+    animation: badgeGlow 2s infinite;
+}
+
+/* Advanced Responsive Design */
+@media (max-width: 768px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+    }
+
+    #analysisResults, #ecoPoints {
+        padding: 1rem;
+    }
+}
+
+/* High-Resolution Displays */
+@media (min-resolution: 2dppx) {
+    header, .section, table, #analysisResults, #ecoPoints {
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.8);
+    }
+}

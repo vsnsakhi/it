@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrack - IT Hackathon</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav>
+  <button onclick="showSection('login')">Login</button>
+  <button onclick="showSection('school')">Register School</button>
+  <button onclick="showSection('user')">Register User</button>
+  <button onclick="showSection('analysis')">Analysis</button>
+  <button onclick="showSection('leaderboard')">Leaderboards</button>
+  <button onclick="showSection('competitions')">Competitions</button>
+  <button onclick="showSection('quiz')">AI Quiz</button>
+  <button onclick="showSection('insights')">Insights</button>
+</nav>
+
+<section id="login" class="section">
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label>User: 
+      <select id="loginUserSelect" required>
+        <option value="">Select a user</option>
+      </select>
+    </label>
+    <button type="submit">Login</button>
+  </form>
+</section>
+
+<section id="school" class="section hidden">
+  <h2>Register School</h2>
+  <form id="schoolForm">
+    <label>School Name: <input type="text" id="schoolName" required></label>
+    <label>Area (sqm): <input type="number" id="schoolArea" required></label>
+    <label>Number of Students: <input type="number" id="schoolStudents" required></label>
+    <label>District: <input type="text" id="schoolDistrict"></label>
+    <label>State: <input type="text" id="schoolState"></label>
+    <button type="submit">Register</button>
+  </form>
+</section>
+
+<section id="user" class="section hidden">
+  <h2>Register User</h2>
+  <form id="userForm">
+    <label>Name: <input type="text" id="userName" required></label>
+    <label>School: 
+      <select id="userSchoolSelect" required>
+        <option value="">Select a school</option>
+      </select>
+    </label>
+    <label>Class (optional): <input type="text" id="userClass"></label>
+    <button type="submit">Register User</button>
+  </form>
+</section>
+
+<section id="analysis" class="section hidden">
+  <h2>Bill Analysis</h2>
+  <form id="billForm">
+    <label>School: <select id="schoolSelect" required></select></label>
+    <label>Electricity (kWh): <input type="number" id="kwh" required></label>
+    <label>Electricity Cost (₹): <input type="number" id="elecCost" required></label>
+    <label>Water (liters): <input type="number" id="liters" required></label>
+    <label>Water Cost (₹): <input type="number" id="waterCost" required></label>
+    <button type="submit">Analyze</button>
+  </form>
+  <div>
+    <p>Per Student kWh: <span id="perStudentKwh">0</span></p>
+    <p>Per Area kWh: <span id="perAreaKwh">0</span></p>
+    <p>Electricity Score: <span id="elecScore">0</span></p>
+    <p>Per Student Liters: <span id="perStudentLiters">0</span></p>
+    <p>Per Area Liters: <span id="perAreaLiters">0</span></p>
+    <p>Water Score: <span id="waterScore">0</span></p>
+    <!-- ML Predictions -->
+    <p>Predicted Next Month kWh: <span id="predictedKwh">-</span></p>
+    <p>Predicted Next Month Water (liters): <span id="predictedLiters">-</span></p>
+  </div>
+</section>
+
+<section id="leaderboard" class="section hidden">
+  <h2>Leaderboards</h2>
+  <select id="leaderboardType">
+    <option value="school">School</option>
+    <option value="class">Class</option>
+    <option value="student">Student</option>
+    <option value="district">District</option>
+    <option value="state">State</option>
+  </select>
+
+  <div id="schoolLeaderboard">
+    <h3>School Leaderboard</h3>
+    <table><tbody id="schoolTableBody"></tbody></table>
+  </div>
+  <div id="classLeaderboard" class="hidden">
+    <h3>Class Leaderboard</h3>
+    <table><tbody id="classTableBody"></tbody></table>
+  </div>
+  <div id="studentLeaderboard" class="hidden">
+    <h3>Student Leaderboard</h3>
+    <table><tbody id="studentTableBody"></tbody></table>
+  </div>
+  <div id="districtLeaderboard" class="hidden">
+    <h3>District Leaderboard</h3>
+    <table><tbody id="districtTableBody"></tbody></table>
+  </div>
+  <div id="stateLeaderboard" class="hidden">
+    <h3>State Leaderboard</h3>
+    <table><tbody id="stateTableBody"></tbody></table>
+  </div>
+</section>
+
+<section id="competitions" class="section hidden">
+  <h2>Competitions</h2>
+  <p>Assigned Activity: <span id="randomActivity"></span></p>
+  <button onclick="completeActivity()">Complete Activity</button>
+  <p>Current Streak: <span id="streakCount">0</span></p>
+  <p>Total Points: <span id="totalPoints">0</span></p>
+  <p>Badge: <span id="badges"></span></p>
+</section>
+
+<section id="quiz" class="section hidden">
+  <h2>AI Quiz</h2>
+  <form id="quizForm">
+    <label>Topic: <input type="text" id="quizTopic" placeholder="Enter topic" required></label>
+    <button type="submit">Generate Quiz</button>
+  </form>
+  <div id="quizContainer"></div>
+  <button id="submitQuizBtn">Submit Quiz</button>
+</section>
+
+<!-- -------------------- INSIGHTS SECTION -------------------- -->
+<section id="insights" class="section hidden">
+  <h2>School Insights</h2>
+  <label>School: 
+    <select id="insightSchoolSelect">
+      <option value="">Select a school</option>
+    </select>
+  </label>
+  <button id="loadInsightsBtn">Load Insights</button>
+
+  <div id="insightsData" style="margin-top:20px; display:none;">
+    <h3>Predictions & Anomalies</h3>
+    <p>Predicted Next Month kWh: <span id="insightPredictedKwh">-</span></p>
+    <p>Predicted Next Month Water (liters): <span id="insightPredictedLiters">-</span></p>
+    <p id="insightAnomalyAlert" style="color:red;"></p>
+
+    <h3>Usage Trends</h3>
+    <canvas id="insightTrendChart" width="600" height="300"></canvas>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
