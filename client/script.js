@@ -1,4 +1,9 @@
-const API_BASE = "https://it-10.onrender.com/"; 
+// -------------------- CONFIG --------------------
+// Detect environment: if running on localhost, use local API (3006); otherwise use Render deployed API
+const API_BASE = window.location.hostname === "localhost"
+  ? "http://localhost:3006"   // <-- local backend
+  : "https://it-10.onrender.com"; // <-- Render backend URL
+
 let currentStudent = null;
 
 // -------------------- UI --------------------
@@ -287,3 +292,4 @@ async function loadInsights() {
 
   } catch(err){ console.error(err); alert("Error loading insights"); }
 }
+
