@@ -46,12 +46,13 @@ app.use("/api/competitions", require(path.join(__dirname, "routes", "competition
 // -------------------- Serve Frontend --------------------
 app.use(express.static(path.join(__dirname, "../client")));
 
-// ✅ Express v5 safe catch-all
-app.get("/*", (req, res) => {
+// ✅ Express v5 compatible regex catch-all for SPA routing
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../client", "index.html"));
 });
 
 // -------------------- Start Server --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
