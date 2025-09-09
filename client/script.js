@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3006/api"; 
+const API_BASE = "https://it-10.onrender.com/"; 
 let currentStudent = null;
 
 // -------------------- UI --------------------
