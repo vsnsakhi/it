@@ -35,14 +35,15 @@ app.use('/api/competitions', require('./routes/competitions'));
 // -------------------- SERVE FRONTEND --------------------
 app.use(express.static(path.join(__dirname, "../client")));
 
-// Catch-all route for SPA (Express 4.x compatible)
-app.get('/*', (req, res) => {
+// -------------------- SPA CATCH-ALL --------------------
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
