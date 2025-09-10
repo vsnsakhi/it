@@ -26,7 +26,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // -------------------- API ROUTES --------------------
-// Make sure these routes exist in backend/routes
 app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/analysis', require('./routes/analysis'));
 app.use('/api/leaderboards', require('./routes/leaderboards'));
@@ -36,14 +35,15 @@ app.use('/api/competitions', require('./routes/competitions'));
 // -------------------- SERVE FRONTEND --------------------
 app.use(express.static(path.join(__dirname, "../client")));
 
-// Catch-all to serve index.html for SPA (important: after API routes)
-app.get('*', (req, res) => {
+// Catch-all route for SPA (Express 4.x compatible)
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
