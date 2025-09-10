@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,45 +5,47 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// -------------------- LOAD ENV --------------------
+// Load .env from project root
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
-
-// -------------------- MIDDLEWARE --------------------
 app.use(bodyParser.json());
 app.use(cors());
 
-// -------------------- DEBUG --------------------
+// Debug print to check if MONGO_URI is loaded
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
-// -------------------- DATABASE --------------------
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
 .then(() => console.log("✅ MongoDB connected"))
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// -------------------- API ROUTES --------------------
+// -------------------- API Routes --------------------
+// AI / Quiz / Activity
 app.use('/api/ai', require('./routes/aiRoutes'));
+
+// School registration & bill analysis
 app.use('/api/analysis', require('./routes/analysis'));
+
+// Leaderboards
 app.use('/api/leaderboards', require('./routes/leaderboards'));
+
+// Gamification / Users / Points
 app.use('/api/gamification', require('./routes/gamification'));
+
+// Competitions / top schools / top users
 app.use('/api/competitions', require('./routes/competitions'));
 
-// -------------------- SERVE FRONTEND --------------------
+// -------------------- Serve Frontend --------------------
 app.use(express.static(path.join(__dirname, "../client")));
 
-// -------------------- SPA CATCH-ALL --------------------
-// Express 5 compatible syntax
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client', 'index.html'));
-});
-
-// -------------------- START SERVER --------------------
+// -------------------- Start Server --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
