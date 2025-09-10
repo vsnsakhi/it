@@ -1,4 +1,4 @@
-
+// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -33,17 +33,18 @@ app.use('/api/leaderboards', require('./routes/leaderboards'));
 app.use('/api/gamification', require('./routes/gamification'));
 app.use('/api/competitions', require('./routes/competitions'));
 
-// -------------------- SERVE FRONTEND --------------------
-app.use(express.static(path.join(__dirname, "../client")));
+// -------------------- SERVE STATIC FILES --------------------
+app.use(express.static(path.join(__dirname, '../client')));
 
 // -------------------- SPA CATCH-ALL --------------------
-app.get('/:path(*)', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
