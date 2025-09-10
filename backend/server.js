@@ -19,9 +19,12 @@ app.use(cors());
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 // -------------------- DATABASE --------------------
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("✅ MongoDB connected"))
+.catch(err => console.error("❌ MongoDB connection error:", err));
 
 // -------------------- API ROUTES --------------------
 app.use('/api/ai', require('./routes/aiRoutes'));
@@ -34,7 +37,7 @@ app.use('/api/competitions', require('./routes/competitions'));
 app.use(express.static(path.join(__dirname, "../client")));
 
 // -------------------- SPA CATCH-ALL --------------------
-app.get('*', (req, res) => {
+app.get('/:path(*)', (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
