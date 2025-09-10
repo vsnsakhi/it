@@ -1,3 +1,4 @@
+// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -5,7 +6,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// Load .env from project root
+// -------------------- LOAD ENV --------------------
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
@@ -36,19 +37,14 @@ app.use('/api/competitions', require('./routes/competitions'));
 app.use(express.static(path.join(__dirname, "../client")));
 
 // -------------------- SPA CATCH-ALL --------------------
-// Express 5 requires a parameter name for wildcard
-app.get('/:anyPath(*)', (req, res) => {
+// Express 5 compatible syntax
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
 // -------------------- START SERVER --------------------
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-
-
-
-
 
 
 
